@@ -109,7 +109,7 @@ scopes2 = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 api_service_name = "youtube"
 api_version = "v3"
-client_secrets_file = "csgoto.json"
+client_secrets_file = "csgo2.json"
 
 # Create the YouTube API client
 flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
