@@ -253,21 +253,35 @@ for video_id in uncommon_ids_list:
             else:
                 print(f"Video {item['videoId']} is already liked.")
     except googleapiclient.errors.HttpError as e:
-        print(f"Error checking or adding videos to liked music: {str(e)}")
-        songs_missed += 1
+        if 'quotaExceeded' in str(e):
+            print("Quota exceeded, stopping the program.")
+            print(f"\nTotal songs added: {total_songs_added}")
+            print(f"Number of songs missed: {songs_missed}")
+            print("Stopping the program.")
+            animation = "|/-\\"
+            for i in range(10):
+                sys.stdout.write("\r" + "Exiting in " + str(10 - i) + " seconds " + animation[i % len(animation)])
+                sys.stdout.flush()
+                time.sleep(1)
+            sys.exit()
+        else:
+            print(f"Error checking or adding videos to liked music: {str(e)}")
+            songs_missed += 1
 
         
 
-print(f"\nTotal songs added: {total_songs_added}")
-print(f"Number of songs missed: {songs_missed}")
 
-print("Stopping the program.")
 
-# Timer with animation
-animation = "|/-\\"
-for i in range(10):
-    sys.stdout.write("\r" + "Exiting in " + str(10 - i) + " seconds " + animation[i % len(animation)])
-    sys.stdout.flush()
-    time.sleep(1)
 
-sys.exit()
+
+
+
+
+
+
+
+
+request = youtube.subscriptions().list(
+    part="snippet,contentDetails",
+    channelId="CHANNEL_ID"
+)
